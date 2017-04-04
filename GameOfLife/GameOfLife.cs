@@ -20,28 +20,11 @@ namespace GameOfLife
             var newWorld = nextState.Convert();
             return newWorld;
         }
-        
+
         public List<Cell> GetNeighbours(Cell cell, List<Cell> worldCells)
         {
-            var positions = GetNeighboursPositions(cell);
+            var positions = cell.GetNeighboursPositions(_length);
             return worldCells.Where(x => positions.Contains(x.Position)).ToList();
-        }
-
-        private List<Position> GetNeighboursPositions(Cell cell)
-        {
-            var positions = new List<Position>
-            {
-                new Position(cell.Position.X - 1, cell.Position.Y),
-                new Position(cell.Position.X - 1, cell.Position.Y + 1),
-                new Position(cell.Position.X - 1, cell.Position.Y - 1),
-                new Position(cell.Position.X, cell.Position.Y + 1),
-                new Position(cell.Position.X, cell.Position.Y - 1),
-                new Position(cell.Position.X + 1, cell.Position.Y),
-                new Position(cell.Position.X + 1, cell.Position.Y + 1),
-                new Position(cell.Position.X + 1, cell.Position.Y - 1)
-            };
-            positions.RemoveAll(a => a.X < 0 || a.Y < 0 || a.X > _length - 1 || a.Y > _length - 1);
-            return positions;
         }
 
         public List<Cell> GetNextState(int max, List<Cell> currentCells)
