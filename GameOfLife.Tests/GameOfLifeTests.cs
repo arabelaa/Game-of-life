@@ -49,6 +49,31 @@ namespace GameOfLife.Tests
         }
 
         [TestMethod]
+        public void GameOfLife_Glider_life()
+        {
+            var world = new List<List<bool>>
+            {
+                new List<bool> {false, false, false, false, false},
+                new List<bool> {false, true, true, true, false},
+                new List<bool> {false, false, false, true, false},
+                new List<bool> {false, false, true, false, false},
+                new List<bool> {false, false, false, false, false}
+            };
+
+            var result = new GameOfLife(4).GetNext(world);
+
+            var expected = new List<List<bool>>
+            {
+                new List<bool> {false, false, true, false, false},
+                new List<bool> {false, false, true, true, false},
+                new List<bool> {false, true, false, true, false},
+                new List<bool> {false, false, false, false, false},
+                new List<bool> {false, false, false, false, false}
+            };
+            Assert.IsTrue(expected.SequenceEqual(result, new EnumerableComparer<bool>()));
+        }
+
+        [TestMethod]
         public void GameOfLife_Oscilator_Beacon_life()
         {
             var world = new List<List<bool>>
