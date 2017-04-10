@@ -10,7 +10,6 @@ namespace GameOfLife.Tests
         [TestMethod]
         public void GameOfLife_Still_Block_life()
         {
-            var gameOfLife = new GameOfLife(4);
             var world = new List<List<bool>>
             {
                 new List<bool> {false, false, false, false},
@@ -18,14 +17,15 @@ namespace GameOfLife.Tests
                 new List<bool> {false, true, true, false},
                 new List<bool> {false, false, false, false}
             };
-            var result = gameOfLife.GetNext(world);
+
+            var result = new GameOfLife(4).GetNext(world);
+
             Assert.IsTrue(world.SequenceEqual(result, new EnumerableComparer<bool>()));
         }
 
         [TestMethod]
         public void GameOfLife_Oscilator_Blinker_life()
         {
-            var gameOfLife = new GameOfLife(4);
             var world = new List<List<bool>>
             {
                 new List<bool> {false, false, false, false, false},
@@ -34,7 +34,9 @@ namespace GameOfLife.Tests
                 new List<bool> {false, false, true, false, false},
                 new List<bool> {false, false, false, false, false}
             };
-            var result = gameOfLife.GetNext(world);
+
+            var result = new GameOfLife(4).GetNext(world);
+
             var expected = new List<List<bool>>
             {
                 new List<bool> {false, false, false, false, false},
@@ -49,7 +51,6 @@ namespace GameOfLife.Tests
         [TestMethod]
         public void GameOfLife_Oscilator_Beacon_life()
         {
-            var gameOfLife = new GameOfLife(5);
             var world = new List<List<bool>>
             {
                 new List<bool> {false, false, false, false, false, false},
@@ -59,13 +60,42 @@ namespace GameOfLife.Tests
                 new List<bool> {false, true, true, false, false, false},
                 new List<bool> {false, false, false, false, false, false}
             };
-            var result = gameOfLife.GetNext(world);
+
+            var result = new GameOfLife(5).GetNext(world);
+
             var expected = new List<List<bool>>
             {
                 new List<bool> {false, false, false, false, false, false},
                 new List<bool> {false, false, false, true, true, false},
                 new List<bool> {false, false, false, true, true, false},
                 new List<bool> {false, true, true, false, false, false},
+                new List<bool> {false, true, true, false, false, false},
+                new List<bool> {false, false, false, false, false, false}
+            };
+            Assert.IsTrue(expected.SequenceEqual(result, new EnumerableComparer<bool>()));
+        }
+
+        [TestMethod]
+        public void GameOfLife_Oscilator_Beacon_Reverse_life()
+        {
+            var world = new List<List<bool>>
+            {
+               new List<bool> {false, false, false, false, false, false},
+                new List<bool> {false, false, false, true, true, false},
+                new List<bool> {false, false, false, true, true, false},
+                new List<bool> {false, true, true, false, false, false},
+                new List<bool> {false, true, true, false, false, false},
+                new List<bool> {false, false, false, false, false, false}
+            };
+
+            var result = new GameOfLife(5).GetNext(world);
+
+            var expected = new List<List<bool>>
+            {
+                new List<bool> {false, false, false, false, false, false},
+                new List<bool> {false, false, false, true, true, false},
+                new List<bool> {false, false, false, false, true, false},
+                new List<bool> {false, true, false, false, false, false},
                 new List<bool> {false, true, true, false, false, false},
                 new List<bool> {false, false, false, false, false, false}
             };
@@ -82,7 +112,9 @@ namespace GameOfLife.Tests
                 new List<bool> {false, true, true, false},
                 new List<bool> {false, false, false, false}
             };
+
             var result = world.Convert();
+
             var output = new List<Cell>
             {
                 new Cell(new Position(0, 0), false),
@@ -108,7 +140,6 @@ namespace GameOfLife.Tests
         [TestMethod]
         public void GetNextState_ForStillLife_ReturnStillLife()
         {
-            var gameOfLife = new GameOfLife(4);
             var world = new List<List<bool>>
             {
                 new List<bool> {false, false, false, false},
@@ -117,7 +148,8 @@ namespace GameOfLife.Tests
                 new List<bool> {false, false, false, false}
             };
             var cells = world.Convert();
-            var nextState = gameOfLife.GetNextState(4, cells);
+
+            var nextState = new GameOfLife(4).GetNextState(cells);
 
             var expected = new List<Cell>
             {
@@ -144,13 +176,6 @@ namespace GameOfLife.Tests
         [TestMethod]
         public void ConvertCellsToWorld()
         {
-            var expected = new List<List<bool>>
-            {
-                new List<bool> {false, false, false, false},
-                new List<bool> {false, true, true, false},
-                new List<bool> {false, true, true, false},
-                new List<bool> {false, false, false, false}
-            };
             var result = new List<Cell>
             {
                 new Cell(new Position(0, 0), false),
@@ -171,6 +196,13 @@ namespace GameOfLife.Tests
                 new Cell(new Position(3, 3), false)
             }.Convert();
 
+            var expected = new List<List<bool>>
+            {
+                new List<bool> {false, false, false, false},
+                new List<bool> {false, true, true, false},
+                new List<bool> {false, true, true, false},
+                new List<bool> {false, false, false, false}
+            };
             Assert.IsTrue(expected.SequenceEqual(result, new EnumerableComparer<bool>()));
         }
     }

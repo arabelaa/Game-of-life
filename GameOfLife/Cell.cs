@@ -51,7 +51,7 @@ namespace GameOfLife
 
         public override int GetHashCode()
         {
-            return Position.X.GetHashCode() + Position.Y.GetHashCode();
+            return Position.X.GetHashCode() + Position.Y.GetHashCode() + State.GetHashCode();
         }
 
         public override bool Equals(object obj)
