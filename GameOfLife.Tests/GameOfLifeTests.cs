@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GameOfLife.Tests
 {
@@ -47,25 +47,27 @@ namespace GameOfLife.Tests
         }
 
         [TestMethod]
-        public void GameOfLife_Oscilator_Toad_life()
+        public void GameOfLife_Oscilator_Beacon_life()
         {
-            var gameOfLife = new GameOfLife(4);
+            var gameOfLife = new GameOfLife(5);
             var world = new List<List<bool>>
             {
-                new List<bool> {false, false, false, false, false},
-                new List<bool> {false, false, true, false, false},
-                new List<bool> {false, false, true, false, false},
-                new List<bool> {false, false, true, false, false},
-                new List<bool> {false, false, false, false, false}
+                new List<bool> {false, false, false, false, false, false},
+                new List<bool> {false, false, false, true, true, false},
+                new List<bool> {false, false, false, false, true, false},
+                new List<bool> {false, true, false, false, false, false},
+                new List<bool> {false, true, true, false, false, false},
+                new List<bool> {false, false, false, false, false, false}
             };
             var result = gameOfLife.GetNext(world);
             var expected = new List<List<bool>>
             {
-                new List<bool> {false, false, false, false, false},
-                new List<bool> {false, false, false, false, false},
-                new List<bool> {false, true, true, true, false},
-                new List<bool> {false, false, false, false, false},
-                new List<bool> {false, false, false, false, false}
+                new List<bool> {false, false, false, false, false, false},
+                new List<bool> {false, false, false, true, true, false},
+                new List<bool> {false, false, false, true, true, false},
+                new List<bool> {false, true, true, false, false, false},
+                new List<bool> {false, true, true, false, false, false},
+                new List<bool> {false, false, false, false, false, false}
             };
             Assert.IsTrue(expected.SequenceEqual(result, new EnumerableComparer<bool>()));
         }
@@ -73,7 +75,6 @@ namespace GameOfLife.Tests
         [TestMethod]
         public void ConvertWorldToCells()
         {
-            var gameOfLife = new GameOfLife(4);
             var world = new List<List<bool>>
             {
                 new List<bool> {false, false, false, false},
@@ -143,7 +144,6 @@ namespace GameOfLife.Tests
         [TestMethod]
         public void ConvertCellsToWorld()
         {
-            var gameOfLife = new GameOfLife(4);
             var expected = new List<List<bool>>
             {
                 new List<bool> {false, false, false, false},

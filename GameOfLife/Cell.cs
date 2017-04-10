@@ -58,7 +58,9 @@ namespace GameOfLife
         {
             var other = obj as Cell;
             if (other == null)
+            {
                 return false;
+            }
             return Position.X == other.Position.X && Position.Y == other.Position.Y && State == other.State;
         }
     }
